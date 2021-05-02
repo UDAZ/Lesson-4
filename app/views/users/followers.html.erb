@@ -1,1 +1,17 @@
-フォロワー一覧
+<h3>フォロワー一覧</h3>
+<table class='table'>
+  <tbody>
+
+  <% @user.follower_user.where.not(id: current_user.id).each do |user| %>
+    <tr>
+      <td><%= "#{user.name}" %></td>
+      <td><% if current_user.following?(user) %>
+        <%= link_to 'フォロー外す', unfollow_path(user.id), method: :POST %>
+      <% else %>
+        <%= link_to 'フォローする', follow_path(user.id), method: :POST %>
+      <% end %></td>
+      <td><%= link_to "show", user_path(user) %></td>
+    </tr>
+  <% end %>
+    </tbody>
+      </table>
