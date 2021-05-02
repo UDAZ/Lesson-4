@@ -8,6 +8,23 @@
 	  <th>introduction</th>
 	  <th><%= user.introduction %></th>
   </tr>
+  <tr>
+	  <th>follows</th>
+	  <th><%= user.introduction %></th>
+  </tr>
+  <tr>
+	  <th>followers</th>
+	  <th><%= user.introduction %></th>
+  </tr>
+  <% unless user == current_user %>
+    <tr>
+      <% if current_user.following?(user) %>
+        <th><%= link_to 'フォロー外す', unfollow_path(user.id), method: :POST %></th>
+      <% else %>
+        <th><%= link_to 'フォローする', follow_path(user.id), method: :POST %></th>
+      <% end %>
+    </tr>
+  <% end %>    
 </table>
 
 <div class='row'>
