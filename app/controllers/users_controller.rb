@@ -25,12 +25,12 @@ class UsersController < ApplicationController
     end
   end
   
-  def followed
+  def follows
     @user = User.find(current_user.id)
     @users = User.all
   end
 
-  def follower
+  def followers
     @user = User.find(current_user.id)
     @users = User.all
   end
