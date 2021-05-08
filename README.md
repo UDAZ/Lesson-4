@@ -58,3 +58,18 @@ end
 post 'follow/:id' => 'relationships#follow', as: 'follow' # フォローする
 post 'unfollow/:id' => 'relationships#unfollow', as: 'unfollow' # フォロー外す
 ```
+### ⑧viewの追加
+#### ①_index.html.erbに追加
+```
+        <td><%= "フォロー数: #{user.follower.count}" %></td>
+        <td><%= "フォロワー数: #{user.followed.count}" %></td>
+        <td>
+          <% unless user == current_user %>
+            <% if current_user.following?(user) %>
+              <%= link_to 'フォロー外す', unfollow_path(user.id), method: :POST %>
+            <% else %>
+              <%= link_to 'フォローする', follow_path(user.id), method: :POST %>
+            <% end %>
+          <% end %>
+        </td>
+```
