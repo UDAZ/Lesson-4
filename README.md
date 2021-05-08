@@ -73,3 +73,23 @@ post 'unfollow/:id' => 'relationships#unfollow', as: 'unfollow' # フォロー�
           <% end %>
         </td>
 ```
+#### ②_info.html.erbに追加
+```
+  <tr>
+	  <th>follows</th>
+	  <th><%= link_to "#{user.follower.count}", user_follows_path(user.id) %></th>
+  </tr>
+  <tr>
+	  <th>followers</th>
+	  <th><%= link_to "#{user.followed.count}", user_followers_path(user.id) %></th>
+  </tr>
+  <% unless user == current_user %>
+    <tr>
+      <% if current_user.following?(user) %>
+        <th><%= link_to 'フォロー外す', unfollow_path(user.id), class: "btn btn-sm btn-warning", method: :POST %></th>
+      <% else %>
+        <th><%= link_to 'フォローする', follow_path(user.id), class: "btn btn-sm btn-primary", method: :POST %></th>
+      <% end %>
+    </tr>
+  <% end %>
+```
