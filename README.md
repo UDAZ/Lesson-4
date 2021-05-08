@@ -53,3 +53,8 @@ def unfollow
   redirect_to root_path
 end
 ```
+### ⑦ルーティングを追加
+```
+post 'follow/:id' => 'relationships#follow', as: 'follow' # フォローする
+post 'unfollow/:id' => 'relationships#unfollow', as: 'unfollow' # フォロー外す
+```
