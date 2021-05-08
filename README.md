@@ -37,3 +37,19 @@ def following?(user)
   following_user.include?(user)
 end
 ```
+### ⑤relationshipsコントローラーを作成
+```
+rails g controller relationships
+```
+### ⑥relationshipsコントローラーに追記
+```
+def follow
+  current_user.follow(params[:id])
+  redirect_to root_path
+end
+
+def unfollow
+  current_user.unfollow(params[:id])
+  redirect_to root_path
+end
+```
