@@ -18,5 +18,5 @@ belongs_to :followed, class_name: "User"
 #### ③throughを使ったuserモデルに関連付け
 ```
 has_many :following_user, through: :follower, source: :followed #自分がフォローしている人
-has_many :follower_user, through: :followed, source: :follower
+has_many :follower_user, through: :followed, source: :follower #自分をフォローしている人
 ```
