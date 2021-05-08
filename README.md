@@ -43,20 +43,32 @@ rails g controller relationships
 ```
 ### ⑥relationshipsコントローラーに追記
 ```
-def follow
-  current_user.follow(params[:id])
-  redirect_to root_path
-end
+class RelationshipsController < ApplicationController
+    def follow
+        current_user.follow(params[:id])
+        redirect_to request.referer
+    end
 
-def unfollow
-  current_user.unfollow(params[:id])
-  redirect_to root_path
+    def unfollow
+        current_user.unfollow(params[:id])
+        redirect_to request.referer
+    end
 end
 ```
-### ⑦ルーティングを追加
+### ⑦ルーティングを編集
 ```
-post 'follow/:id' => 'relationships#follow', as: 'follow' # フォローする
-post 'unfollow/:id' => 'relationships#unfollow', as: 'unfollow' # フォロー外す
+Rails.application.routes.draw do
+  devise_for :users
+  root 'homes#top'
+  resources :users,only: [:show,:index,:edit,:update] do
+    get 'follows' => 'users#follows', as: 'follows'    #フォロー一覧
+    get 'followers' => 'users#followers', as: 'followers'    #フォロワー一覧
+  end
+  resources :books
+  get 'home/about' => 'homes#about'
+  post 'follow/:id' => 'relationships#follow', as: 'follow' # フォロー
+  post 'unfollow/:id' => 'relationships#unfollow', as: 'unfollow' # フォロー解除
+end
 ```
 ### ⑧viewの追加
 #### ①_index.html.erbに追加
