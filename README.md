@@ -43,14 +43,16 @@ rails g controller relationships
 ```
 ### ⑥relationshipsコントローラーに追記
 ```
-def follow
-  current_user.follow(params[:id])
-  redirect_to root_path
-end
+class RelationshipsController < ApplicationController
+    def follow
+        current_user.follow(params[:id])
+        redirect_to request.referer
+    end
 
-def unfollow
-  current_user.unfollow(params[:id])
-  redirect_to root_path
+    def unfollow
+        current_user.unfollow(params[:id])
+        redirect_to request.referer
+    end
 end
 ```
 ### ⑦ルーティングを追加
