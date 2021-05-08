@@ -4,3 +4,14 @@
 ```
 rails g model relationship follower_id:integer followed_id:integer
 ```
+### ②userモデルに関連付け
+```
+has_many :follower, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy # フォロー取得
+has_many :followed, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy # フォロワー取得
+```
+### ③relationshipモデルに関連付け
+```
+belongs_to :follower, class_name: "User"
+belongs_to :followed, class_name: "User"
+```
+
